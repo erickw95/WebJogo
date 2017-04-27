@@ -1,0 +1,204 @@
+<html>
+<head>
+<title id="titulo">n^2-1 Puzzle</title>
+<script>
+var goTempo = false;
+var totalSeconds = 0;
+var timevar = setInterval(setTime, 1000);
+function criarTabela(){
+	goTempo = true;
+	totalSeconds = -1;
+	setTime();
+	clearInterval( timevar );
+	timevar = setInterval(setTime, 1000);
+	naoMais();
+	var pulo = document.createElement('br');
+	pulo.setAttribute("class", "espaco");
+	document.getElementById("tabelas").appendChild( pulo );
+	if( !document.getElementById("quanto").value ){
+		tam = 4;
+		//return 0;
+	}else{
+		var tam = parseInt(document.getElementById("quanto").value);
+	}
+	document.getElementById("titulo").innerHTML = (tam*tam - 1) + " Puzzle";
+	var matriz = new Array(tam);
+	var ct = 1;
+	for( var i = 0; i < matriz.length; i++ ){
+	matriz[i] = new Array(matriz.length);
+		for( var j = 0; j < matriz.length; j++ ){
+			var unidade = document.createElement('div');
+			if( i == matriz.length - 1 && j == matriz.length - 1 )
+				matriz[i][j] = "";
+			else
+				matriz[i][j] = ct;
+			unidade.innerHTML = matriz[i][j];
+			unidade.setAttribute("class", "uTabelaa");
+			document.getElementById("tabelas").appendChild(unidade);
+			ct++;
+		}
+		var breake = document.createElement('div');
+		breake.setAttribute("class", "espaco");
+		breake.setAttribute("style", "display: table-row");
+		document.getElementById("tabelas").appendChild(breake);
+	}
+	matriz = rVetor(matriz);
+	matriz = praUltimo(matriz);
+	var breake = document.createElement('br');
+	breake.setAttribute("class", "espaco");
+	document.getElementById("tabelas").appendChild(breake);
+	for( var i = 0; i < matriz.length; i++ ){
+		for( var j = 0; j < matriz.length; j++ ){
+			var unidade = document.createElement('div');
+			unidade.innerHTML = matriz[i][j];
+			unidade.setAttribute("class", "uTabelab");
+			document.getElementById("tabelas").appendChild(unidade);
+			ct++;
+		}
+		var breake = document.createElement('div');
+		breake.setAttribute("class", "espaco");
+		breake.setAttribute("style", "display: table-row");
+		document.getElementById("tabelas").appendChild(breake);
+	}
+}
+function rVetor(matrix){
+	for( var i = 0; i < matrix.length; i++ ){
+		for( var j = 0; j < matrix.length; j++ ){
+			var ri = Math.floor((Math.random() * matrix.length));
+			var rj = Math.floor((Math.random() * matrix.length));
+			var n = matrix[i][j];
+			matrix[i][j] = matrix[ri][rj];
+			matrix[ri][rj] = n;
+		}
+	}
+	return matrix;
+}
+function praUltimo(matrix){
+	var pos = new Array(2);
+	pos = achaVazio(matrix);
+	do{
+		if( pos[0] < matrix.length - 1 ){
+				matrix[ pos[0] ] [ pos[1] ] = matrix[ pos[0] + 1 ] [ pos[1] ];
+				matrix[ pos[0] + 1 ] [ pos[1] ] = "";
+				pos[0] += 1;
+		}
+		if( pos[1] < matrix.length - 1 ){
+				matrix[ pos[0] ] [ pos[1] ] = matrix[ pos[0] ] [ pos[1]  + 1 ];
+				matrix[ pos[0] ] [ pos[1]  + 1 ] = "";
+				pos[1] += 1;
+		}
+	}while( matrix[ matrix.length - 1 ] [ matrix.length - 1 ] != "" );
+	return matrix;
+}
+function achaVazio(matrix){
+	var n = new Array(2);
+	for( var i = 0; i < matrix.length; i++ ){
+		for( var j = 0; j < matrix.length; j++ ){
+			if( matrix[i][j] == "" ){
+				n[0] = i;
+				n[1] = j;
+				return n;
+			}
+				
+		}
+	}
+}
+function naoMais(){
+	if( document.getElementsByClassName("uTabelaa").length > 0 ){
+		var n = document.getElementsByClassName("uTabelaa").length;
+		for( var i = 0; i < n ; i++ )
+			document.getElementsByClassName("uTabelaa")[0].remove();
+	}
+	if( document.getElementsByClassName("uTabelab").length > 0 ){
+		var n = document.getElementsByClassName("uTabelab").length;
+		for( var i = 0; i < n ; i++ )
+			document.getElementsByClassName("uTabelab")[0].remove();
+	}
+	if( document.getElementsByClassName("espaco").length > 0 ){
+		var n = document.getElementsByClassName("espaco").length;
+		for( var i = 0; i < n ; i++ )
+			document.getElementsByClassName("espaco")[0].remove();
+	}
+}
+function setTime(){
+	if( goTempo ){
+		++totalSeconds;
+		document.getElementById("segundos").innerHTML = pad(totalSeconds%60);
+		document.getElementById("minutos").innerHTML = pad(parseInt(totalSeconds/60));
+	}
+}
+function pad(val)
+{
+	var valString = val + "";
+	if(valString.length < 2)
+		return "0" + valString;
+	else
+		return valString;
+}
+</script>
+<style>
+body{
+	background-color: fff;
+}
+.quanto{
+	background-color: F5AB75;
+	color: FFFFFF;
+	border: 0px;
+	height:34px;
+	width:254px;
+	padding:8px;
+}
+.bcria{
+	background-color: F5AB75;
+	border: 0px;
+	height:34px;
+	width:80px;
+	color: fff;
+	
+}
+.uTabelaa{
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	width: 54px;
+	height: 54px;
+	background-color:F5AB75;
+	color: fff;
+	border: 1px solid #fff;
+	font-family: "Arial";
+}
+.uTabelab{
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	width: 54px;
+	height: 54px;
+	background-color:fff;
+	color: 000;
+	border: 1px solid #F5AB75;
+	font-family: "Arial";
+}
+.tempo{
+	bottom:0%;
+	right:0%;
+	float:right;
+	position:fixed;
+	margin:20px;
+	font-size:28px;
+	color:C394D4;
+	font-family: "Arial";
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:#fefefe;
+}
+</style>
+</head>
+<body align="center">
+	<input class="quanto" id="quanto" placeholder="Insira o tamanho do Puzzle"></input>
+	<button class="bcria" onclick="criarTabela()">Criar</button>
+	<div id="tabelas" align="center"></div>
+	<div class="tempo">
+		<label id="minutos">00</label>:<label id="segundos">00</label>
+	</div>
+</body>
+</html>
