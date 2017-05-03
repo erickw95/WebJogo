@@ -6,12 +6,13 @@ var goTempo = false;
 var totalSeconds = 0;
 var timevar = setInterval(setTime, 1000);
 function criarTabela(){
+	naoMais();
+if( document.getElementById("quanto").value >= 3 && document.getElementById("quanto").value <= 12 ){
 	goTempo = true;
 	totalSeconds = -1;
 	setTime();
 	clearInterval( timevar );
 	timevar = setInterval(setTime, 1000);
-	naoMais();
 	var pulo = document.createElement('br');
 	pulo.setAttribute("class", "espaco");
 	document.getElementById("tabelas").appendChild( pulo );
@@ -60,6 +61,13 @@ function criarTabela(){
 		breake.setAttribute("style", "display: table-row");
 		document.getElementById("tabelas").appendChild(breake);
 	}
+}else{
+	var erra = document.createElement('div');
+	erra.setAttribute("class", "espaco");
+	erra.innerHTML = "Insira um valor válido.";
+	document.getElementById("tabelas").appendChild(erra);
+	document.getElementById("titulo").innerHTML = "n^2-1 Puzzle";
+}
 }
 function rVetor(matrix){
 	for( var i = 0; i < matrix.length; i++ ){
@@ -141,12 +149,14 @@ body{
 	background-color: fff;
 }
 .quanto{
-	background-color: F5AB75;
-	color: FFFFFF;
-	border: 0px;
+	background-color: fff;
+	color: F5AB75;
+	border: 1px solid #F5AB75;
 	height:34px;
 	width:254px;
 	padding:8px;
+	//font-weight:bold;
+	font-size:18px;
 }
 .bcria{
 	background-color: F5AB75;
@@ -174,8 +184,14 @@ body{
 	width: 54px;
 	height: 54px;
 	background-color:fff;
-	color: 000;
+	color: F5AB75;
 	border: 1px solid #F5AB75;
+	font-family: "Arial";
+	font-weight:bold;
+}
+.espaco{
+	font-size:14px;
+	color:C394D4;
 	font-family: "Arial";
 }
 .tempo{
@@ -190,6 +206,9 @@ body{
 }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:#fefefe;
+}
+input, button {
+    outline: none;
 }
 </style>
 </head>
