@@ -5,6 +5,7 @@
 var goTempo = false;
 var totalSeconds = 0;
 var timevar = setInterval(setTime, 1000);
+var pos = new Array(2);
 function criarTabela(){
 	naoMais();
 if( document.getElementById("quanto").value >= 3 && document.getElementById("quanto").value <= 12 ){
@@ -31,6 +32,8 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 			var unidade = document.createElement('div');
 			if( i == matriz.length - 1 && j == matriz.length - 1 ){
 				matriz[i][j] = "";
+				pos[0]=i;
+				pos[1]=j;
 			}
 			else
 				matriz[i][j] = ct;
@@ -53,11 +56,11 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 		for( var j = 0; j < matriz.length; j++ ){
 			var unidade = document.createElement('div');
 			unidade.innerHTML = matriz[i][j];
-			if( i == matriz.length - 1 && j == matriz.length - 2
+			/*if( i == matriz.length - 1 && j == matriz.length - 2
 			 || i == matriz.length - 2 && j == matriz.length - 1 ){
 				unidade.style.backgroundColor="FABE8D";
 				unidade.style.color="FFFFFF";
-			}
+			}*/ uHighlight(matriz.length, i, j, unidade);
 			unidade.setAttribute("class", "uTabelab");
 			document.getElementById("tabelas").appendChild(unidade);
 			ct++;
@@ -148,6 +151,15 @@ function pad(val)
 		return "0" + valString;
 	else
 		return valString;
+}
+function uHighlight(n, x, y, elemento){
+	if( n*(x-1)+y == n*(pos[0]-1)+(pos[1]+1)
+	 || n*(x-1)+y == n*(pos[0]-1)+(pos[1]-1)
+	 || n*(x-1)+y == n*(pos[0]-2)+pos[1]
+	 || n*(x-1)+y == n*(pos[0])+pos[1]	){
+		elemento.style.backgroundColor="FABE8D";
+		elemento.style.color="FFFFFF";
+	}
 }
 </script>
 <style>
