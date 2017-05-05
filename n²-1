@@ -49,6 +49,7 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 	}
 	matriz = rVetor(matriz);
 	matriz = praUltimo(matriz);
+	pos = achaVazio(matriz);
 	var breake = document.createElement('br');
 	breake.setAttribute("class", "espaco");
 	document.getElementById("tabelas").appendChild(breake);
@@ -56,11 +57,7 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 		for( var j = 0; j < matriz.length; j++ ){
 			var unidade = document.createElement('div');
 			unidade.innerHTML = matriz[i][j];
-			/*if( i == matriz.length - 1 && j == matriz.length - 2
-			 || i == matriz.length - 2 && j == matriz.length - 1 ){
-				unidade.style.backgroundColor="FABE8D";
-				unidade.style.color="FFFFFF";
-			}*/ uHighlight(matriz.length, i, j, unidade);
+			uHighlight(matriz.length, i, j, unidade);
 			unidade.setAttribute("class", "uTabelab");
 			document.getElementById("tabelas").appendChild(unidade);
 			ct++;
@@ -153,10 +150,10 @@ function pad(val)
 		return valString;
 }
 function uHighlight(n, x, y, elemento){
-	if( n*(x-1)+y == n*(pos[0]-1)+(pos[1]+1)
-	 || n*(x-1)+y == n*(pos[0]-1)+(pos[1]-1)
-	 || n*(x-1)+y == n*(pos[0]-2)+pos[1]
-	 || n*(x-1)+y == n*(pos[0])+pos[1]	){
+	if( ( n*(x-1)+y == n*(pos[0]-1)+(pos[1]+1) && pos[1] != n-1 )
+	 || ( n*(x-1)+y == n*(pos[0]-1)+(pos[1]-1) && pos[1] != 0 )
+	 || ( n*(x-1)+y == n*(pos[0]-2)+pos[1] && pos[0] != 0 )
+	 || ( n*(x-1)+y == n*(pos[0])+pos[1] && pos[0] != n-1 )	){
 		elemento.style.backgroundColor="FABE8D";
 		elemento.style.color="FFFFFF";
 	}
