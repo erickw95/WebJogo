@@ -49,7 +49,6 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 	}
 	matriz = rVetor(matriz);
 	matriz = praUltimo(matriz);
-	pos = achaVazio(matriz);
 	var breake = document.createElement('br');
 	breake.setAttribute("class", "espaco");
 	document.getElementById("tabelas").appendChild(breake);
@@ -112,8 +111,6 @@ function rVetor(matrix){
 	return matrix;
 }
 function praUltimo(matrix){
-	var pos = new Array(2);
-	pos = achaVazio(matrix);
 	do{
 		if( pos[0] < matrix.length - 1 ){
 				matrix[ pos[0] ] [ pos[1] ] = matrix[ pos[0] + 1 ] [ pos[1] ];
@@ -127,19 +124,6 @@ function praUltimo(matrix){
 		}
 	}while( matrix[ matrix.length - 1 ] [ matrix.length - 1 ] != "" );
 	return matrix;
-}
-function achaVazio(matrix){
-	var n = new Array(2);
-	for( var i = 0; i < matrix.length; i++ ){
-		for( var j = 0; j < matrix.length; j++ ){
-			if( matrix[i][j] == "" ){
-				n[0] = i;
-				n[1] = j;
-				return n;
-			}
-				
-		}
-	}
 }
 function naoMais(){
 	if( document.getElementsByClassName("uTabelaa").length > 0 ){
