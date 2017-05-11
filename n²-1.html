@@ -88,7 +88,7 @@ function rVetor(matrix){
 		pos[0] = matrix.length - 2;
 		pos[1] = matrix.length - 1;
 	}
-	for( var i = 0; i < Math.pow(matrix.length, matrix.length ); i++ ){
+	for( var i = 0; i < Math.pow(matrix.length, 4 ); i++ ){
 		var r = Math.floor(Math.random() * 4);
 		var n = matrix[ pos[0] ][ pos[1] ];
 		if( r == 0 && pos[0] > 0){
