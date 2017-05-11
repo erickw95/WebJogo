@@ -48,7 +48,7 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 		document.getElementById("tabelas").appendChild(breake);
 	}
 	matriz = rVetor(matriz);
-	matriz = praUltimo(matriz);
+	//matriz = praUltimo(matriz);
 	pos = achaVazio(matriz);
 	var breake = document.createElement('br');
 	breake.setAttribute("class", "espaco");
@@ -76,14 +76,17 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 }
 }
 function rVetor(matrix){
-	for( var i = 0; i < matrix.length; i++ ){
-		for( var j = 0; j < matrix.length; j++ ){
-			var ri = Math.floor((Math.random() * matrix.length));
-			var rj = Math.floor((Math.random() * matrix.length));
-			var n = matrix[i][j];
-			matrix[i][j] = matrix[ri][rj];
-			matrix[ri][rj] = n;
-		}
+	var r = Math.floor(Math.random() * 2);
+	if( r == 0 ){
+		matrix[ matrix.length - 1 ][ matrix.length - 1 ] = matrix[ matrix.length - 1 ][ matrix.length - 2 ];
+		matrix[ matrix.length - 1 ][ matrix.length - 2 ] = "";
+		pos[0] = matrix.length - 1;
+		pos[1] = matrix.length - 2;
+	}else{
+		matrix[ matrix.length - 1 ][ matrix.length - 1 ] = matrix[ matrix.length - 2 ][ matrix.length - 1 ];
+		matrix[ matrix.length - 2 ][ matrix.length - 1 ] = "";
+		pos[0] = matrix.length - 2;
+		pos[1] = matrix.length - 1;
 	}
 	return matrix;
 }
