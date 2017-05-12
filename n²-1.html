@@ -10,7 +10,8 @@ var matria;
 function criarTabela(){
 	naoMais("uTabelaa");
 	naoMais("uTabelab");
-	naoMais("espaco");
+	naoMais("espacoa");
+	naoMais("espacob");
 if( document.getElementById("quanto").value >= 3 && document.getElementById("quanto").value <= 12 ){
 	goTempo = true;
 	totalSeconds = -1;
@@ -18,7 +19,7 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 	clearInterval( timevar );
 	timevar = setInterval(setTime, 1000);
 	var pulo = document.createElement('br');
-	pulo.setAttribute("class", "espaco");
+	pulo.setAttribute("class", "espacoa");
 	document.getElementById("tabelas").appendChild( pulo );
 	if( !document.getElementById("quanto").value ){
 		tam = 4;
@@ -46,20 +47,20 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 			ct++;
 		}
 		var breake = document.createElement('div');
-		breake.setAttribute("class", "espaco");
+		breake.setAttribute("class", "espacoa");
 		breake.setAttribute("style", "display: table-row");
 		document.getElementById("tabelas").appendChild(breake);
 	}
 	matriz = rVetor(matriz);
 	matriz = praUltimo(matriz);
 	var breake = document.createElement('br');
-	breake.setAttribute("class", "espaco");
+	breake.setAttribute("class", "espacoa");
 	document.getElementById("tabelas").appendChild(breake);
 	gerarPuzzle(matriz);
 	matria = matriz
 }else{
 	var erra = document.createElement('div');
-	erra.setAttribute("class", "espaco");
+	erra.setAttribute("class", "espacoa");
 	erra.innerHTML = "Insira um valor válido.";
 	document.getElementById("tabelas").appendChild(erra);
 	document.getElementById("titulo").innerHTML = "n^2-1 Puzzle";
@@ -185,6 +186,7 @@ document.onkeydown = function(e){
 }
 function gerarPuzzle(matriz){
 	naoMais("uTabelab");
+	naoMais("espacob");
 	for( var i = 0; i < matriz.length; i++ ){
 		for( var j = 0; j < matriz.length; j++ ){
 			var unidade = document.createElement('div');
@@ -194,7 +196,7 @@ function gerarPuzzle(matriz){
 			document.getElementById("tabelas").appendChild(unidade);
 		}
 		var breake = document.createElement('div');
-		breake.setAttribute("class", "espaco");
+		breake.setAttribute("class", "espacob");
 		breake.setAttribute("style", "display: table-row");
 		document.getElementById("tabelas").appendChild(breake);
 	}
