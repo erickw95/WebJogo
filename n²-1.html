@@ -6,8 +6,11 @@ var goTempo = false;
 var totalSeconds = 0;
 var timevar = setInterval(setTime, 1000);
 var pos = new Array(2);
+var matria;
 function criarTabela(){
-	naoMais();
+	naoMais("uTabelaa");
+	naoMais("uTabelab");
+	naoMais("espaco");
 if( document.getElementById("quanto").value >= 3 && document.getElementById("quanto").value <= 12 ){
 	goTempo = true;
 	totalSeconds = -1;
@@ -52,20 +55,8 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 	var breake = document.createElement('br');
 	breake.setAttribute("class", "espaco");
 	document.getElementById("tabelas").appendChild(breake);
-	for( var i = 0; i < matriz.length; i++ ){
-		for( var j = 0; j < matriz.length; j++ ){
-			var unidade = document.createElement('div');
-			unidade.innerHTML = matriz[i][j];
-			uHighlight(matriz.length, i, j, unidade);
-			unidade.setAttribute("class", "uTabelab");
-			document.getElementById("tabelas").appendChild(unidade);
-			ct++;
-		}
-		var breake = document.createElement('div');
-		breake.setAttribute("class", "espaco");
-		breake.setAttribute("style", "display: table-row");
-		document.getElementById("tabelas").appendChild(breake);
-	}
+	gerarPuzzle(matriz);
+	matria = matriz
 }else{
 	var erra = document.createElement('div');
 	erra.setAttribute("class", "espaco");
@@ -90,19 +81,19 @@ function rVetor(matrix){
 	for( var i = 0; i < Math.pow(matrix.length, 4 ); i++ ){
 		var r = Math.floor(Math.random() * 4);
 		var n = matrix[ pos[0] ][ pos[1] ];
-		if( r == 0 && pos[0] > 0){
+		if( r == 0 && pos[0] > 0){ //Cima
 			matrix[ pos[0] ][ pos[1] ] = matrix[ pos[0] - 1 ][ pos[1] ];
 			matrix[ pos[0] - 1 ][ pos[1] ] = "";
 			pos[0]--;
-		}else if( r == 1 && pos[0] < matrix.length - 1){
+		}else if( r == 1 && pos[0] < matrix.length - 1){ //Baixo
 			matrix[ pos[0] ][ pos[1] ] = matrix[ pos[0] + 1 ][ pos[1] ];
 			matrix[ pos[0] + 1 ][ pos[1] ] = "";
 			pos[0]++;
-		}else if( r == 2 && pos[1] > 0){
+		}else if( r == 2 && pos[1] > 0){ //Esquerda
 			matrix[ pos[0] ][ pos[1] ] = matrix[ pos[0] ][ pos[1] - 1 ];
 			matrix[ pos[0] ][ pos[1] - 1 ] = "";
 			pos[1]--;
-		}else if( pos[1] < matrix.length - 1){
+		}else if( pos[1] < matrix.length - 1){ //Direita
 			matrix[ pos[0] ][ pos[1] ] = matrix[ pos[0] ][ pos[1] + 1 ];
 			matrix[ pos[0] ][ pos[1] + 1 ] = "";
 			pos[1]++;
@@ -125,21 +116,11 @@ function praUltimo(matrix){
 	}while( matrix[ matrix.length - 1 ] [ matrix.length - 1 ] != "" );
 	return matrix;
 }
-function naoMais(){
-	if( document.getElementsByClassName("uTabelaa").length > 0 ){
-		var n = document.getElementsByClassName("uTabelaa").length;
+function naoMais(x){
+	if( document.getElementsByClassName(x).length > 0 ){
+		var n = document.getElementsByClassName(x).length;
 		for( var i = 0; i < n ; i++ )
-			document.getElementsByClassName("uTabelaa")[0].remove();
-	}
-	if( document.getElementsByClassName("uTabelab").length > 0 ){
-		var n = document.getElementsByClassName("uTabelab").length;
-		for( var i = 0; i < n ; i++ )
-			document.getElementsByClassName("uTabelab")[0].remove();
-	}
-	if( document.getElementsByClassName("espaco").length > 0 ){
-		var n = document.getElementsByClassName("espaco").length;
-		for( var i = 0; i < n ; i++ )
-			document.getElementsByClassName("espaco")[0].remove();
+			document.getElementsByClassName(x)[0].remove();
 	}
 }
 function setTime(){
@@ -164,6 +145,58 @@ function uHighlight(n, x, y, elemento){
 	 || ( n*(x-1)+y == n*(pos[0])+pos[1] && pos[0] != n-1 )	){
 		elemento.style.backgroundColor="FABE8D";
 		elemento.style.color="FFFFFF";
+	}
+}
+document.onkeydown = function(e){
+	switch(e.keyCode){
+		case 37: //Esquerda
+			if( pos[1] > 0 ){
+				matria[ pos[0] ][ pos[1] ] = matria[ pos[0] ][ pos[1] - 1 ];
+				matria[ pos[0] ][ pos[1] - 1 ] = "";
+				pos[1]--;
+				gerarPuzzle(matria);
+			}
+			break;
+		case 38: //Cima
+			if( pos[0] > 0 ){
+				matria[ pos[0] ][ pos[1] ] = matria[ pos[0] - 1 ][ pos[1] ];
+				matria[ pos[0] - 1 ][ pos[1] ] = "";
+				pos[0]--;
+				gerarPuzzle(matria);
+			}
+			break;
+		case 39: //Direita
+			if( pos[1] < matria.length - 1){
+				matria[ pos[0] ][ pos[1] ] = matria[ pos[0] ][ pos[1] + 1 ];
+				matria[ pos[0] ][ pos[1] + 1 ] = "";
+				pos[1]++;
+				gerarPuzzle(matria);
+			}
+			break;
+		case 40: //Baixo
+			if( pos[0] < matria.length - 1 ){
+				matria[ pos[0] ][ pos[1] ] = matria[ pos[0] + 1 ][ pos[1] ];
+				matria[ pos[0] + 1 ][ pos[1] ] = "";
+				pos[0]++;
+				gerarPuzzle(matria);
+			}
+			break;
+	}
+}
+function gerarPuzzle(matriz){
+	naoMais("uTabelab");
+	for( var i = 0; i < matriz.length; i++ ){
+		for( var j = 0; j < matriz.length; j++ ){
+			var unidade = document.createElement('div');
+			unidade.innerHTML = matriz[i][j];
+			uHighlight(matriz.length, i, j, unidade);
+			unidade.setAttribute("class", "uTabelab");
+			document.getElementById("tabelas").appendChild(unidade);
+		}
+		var breake = document.createElement('div');
+		breake.setAttribute("class", "espaco");
+		breake.setAttribute("style", "display: table-row");
+		document.getElementById("tabelas").appendChild(breake);
 	}
 }
 </script>
