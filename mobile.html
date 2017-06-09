@@ -1,6 +1,6 @@
 <html>
 <head>
-<title id="titulo">n^2-1 Puzzle</title>
+<title id="titulo">n²-1 Puzzle</title>
 <script>
 var goTempo = false;
 var totalSeconds = 0;
@@ -62,9 +62,9 @@ if( document.getElementById("quanto").value >= 3 && document.getElementById("qua
 			unidade.innerHTML = matriz[i][j];
 			uHighlight(matriz.length, i, j, unidade);
 			unidade.setAttribute("class", "uTabelab");
-			unidade.style.width = (window.innerWidth - 100)/matriz.length ;
-			unidade.style.height = (window.innerWidth - 100)/matriz.length ;
-			unidade.style.fontSize = (window.innerWidth - 100)/matriz.length/2 ;
+			unidade.style.width = (window.innerWidth - 50)/matriz.length ;
+			unidade.style.height = (window.innerWidth - 50)/matriz.length ;
+			unidade.style.fontSize = (window.innerWidth - 50)/matriz.length/2 ;
 			document.getElementById("tabelas").appendChild(unidade);
 		}
 		var breake = document.createElement('div');
@@ -169,8 +169,8 @@ function uHighlight(n, x, y, elemento){
 			elemento.onclick = movimentoUp;
 		else//Baixo
 			elemento.onclick = movimentoDown;
-		elemento.style.backgroundColor="FACAA5";
-		elemento.style.color="FFFFFF";
+		elemento.style.backgroundColor="FFEEE3";
+		elemento.style.color="FABE8D";
 	}else{
 		elemento.style.backgroundColor="FFFFFF";
 		elemento.style.color="FABE8D";
@@ -270,6 +270,13 @@ function ifWin(matriz){
 	alert("GANHOU");
 	return true;
 }
+function criaE(e){
+	if (!e) e = window.event;
+		var keyCode = e.keyCode || e.which;
+	if (keyCode == '13'){
+	  criarTabela();
+	}
+}
 </script>
 <style>
 body{
@@ -346,7 +353,7 @@ input, button {
 </style>
 </head>
 <body align="center">
-	<input class="quanto" id="quanto" placeholder="Insira o tamanho"></input>
+	<input class="quanto" id="quanto" placeholder="Insira o tamanho" onkeypress="criaE()"></input>
 	<button class="bcria" onclick="criarTabela()">Criar</button>
 	<div id="tabelas" align="center">
 	</div>
