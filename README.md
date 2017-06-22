@@ -4,7 +4,7 @@ Projeto da disciplina de Desenvolvimento Web UniCEUB.
 
 - [Erick Weissenstein](https://github.com/erickw95)
 - [Artur Monteiro Paiva](https://github.com/arturmntr)
-https://github.com/npuzzle/npuzzle.github.io
+>https://github.com/npuzzle/npuzzle.github.io
 
 # Utilização:
 >https://npuzzle.github.io/
